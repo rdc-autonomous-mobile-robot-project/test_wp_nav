@@ -16,7 +16,7 @@ setup(
     maintainer='kazuki',
     maintainer_email='s19c1057fa@s.chibakoudai.jp',
     description='ros2 package for waypoint navigation',
-    license='TODO: License declaration',
+    license='MIT',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
