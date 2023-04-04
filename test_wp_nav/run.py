@@ -30,9 +30,6 @@ class test_wp_nav(Node):
         self.waypoint_file = self.get_parameter('waypoint_file').get_parameter_value()
         self.dist_err = self.get_parameter('dist_err').get_parameter_value()
         self.loop = self.get_parameter('loop').get_parameter_value()
-        # self.dist_err = 0.6
-        # self.loop = True
-        # self.waypoint_file = '/home/kazuki/ros2_ws/src/test_wp_nav/waypoints/waypoints.yaml'
         with open(self.waypoint_file.string_value, 'r') as yml:
             self.waypoint = yaml.safe_load(yml)
 
