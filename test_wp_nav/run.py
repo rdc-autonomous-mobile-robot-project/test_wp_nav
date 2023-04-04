@@ -19,10 +19,21 @@ class test_wp_nav(Node):
         self.start_srv = self.create_service(Trigger, '/start_wp_nav', self.start_callback)
         self.subscription = self.create_subscription(PoseWithCovarianceStamped, '/amcl_pose', self.pose_callback, 1)
         self.pose_x, self.pose_y = 0.0, 0.0
-        self.dist_err = 0.4
         self.wp_num = 0
-        self.waypoint_file = '/home/kazuki/ros2_ws/src/test_wp_nav/waypoints/waypoints.yaml'
-        with open(self.waypoint_file, 'r') as yml:
+        self.declare_parameters(
+            namespace='',
+            parameters=[
+            ('waypoint_file', '/home/kazuki/ros2_ws/src/test_wp_nav/waypoints/waypoints.yaml'),
+            ('dist_err', 0.6),
+            ('loop', True)
+        ])
+        self.waypoint_file = self.get_parameter('waypoint_file').get_parameter_value()
+        self.dist_err = self.get_parameter('dist_err').get_parameter_value()
+        self.loop = self.get_parameter('loop').get_parameter_value()
+        # self.dist_err = 0.6
+        # self.loop = True
+        # self.waypoint_file = '/home/kazuki/ros2_ws/src/test_wp_nav/waypoints/waypoints.yaml'
+        with open(self.waypoint_file.string_value, 'r') as yml:
             self.waypoint = yaml.safe_load(yml)
 
     def start_callback(self, request, response):
@@ -66,7 +77,7 @@ class test_wp_nav(Node):
         return dist
 
     def status(self, dist):
-        if dist < self.dist_err:
+        if dist < self.dist_err.double_value:
             self.get_logger().info('Goal succeeded!')
             self.wp_num += 1
         else:
@@ -80,7 +91,8 @@ class test_wp_nav(Node):
             self.status(dist)
         else:
             self.get_logger().info('Finish navigation')
-            self.wp_num = 0
+            if self.loop.bool_value:
+                self.wp_num = 0
 
 def main(args=None):
     rclpy.init(args=args)
