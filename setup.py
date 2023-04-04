@@ -11,6 +11,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('lib/' + package_name, glob('test_wp_nav/*.py')),
+        ('share/' + package_name, glob('launch/*.py')),
         ('share/' + package_name, ['package.xml']),
     ],
     install_requires=['setuptools'],

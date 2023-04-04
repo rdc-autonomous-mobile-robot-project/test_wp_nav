@@ -88,7 +88,7 @@ def main(args=None):
     while rclpy.ok():
         rclpy.spin_once(wp_nav)
         wp_nav.navigation()
-        time.sleep(1)
+        time.sleep(0.5)
 
 if __name__ == '__main__':
     main()
