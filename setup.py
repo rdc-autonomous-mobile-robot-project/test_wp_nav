@@ -10,7 +10,7 @@ setup(
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
-        ('share/' + package_name, glob('test_wp_nav/*.py')),
+        ('lib/' + package_name, glob('test_wp_nav/*.py')),
         ('share/' + package_name, ['package.xml']),
     ],
     install_requires=['setuptools'],
@@ -22,7 +22,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'test_wp_nav = test_wp_nav.test_wp_nav:main'
+            'test_wp_nav = test_wp_nav.run:main'
         ],
     },
 )
